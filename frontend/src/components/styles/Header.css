@@ -1,0 +1,36 @@
+header {
+    width: 100%;
+    padding: 1rem 0;
+    border-bottom: 1px solid #afafaf;
+    background-color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header .container h1 {
+    margin: 0;
+}
+
+/* Navigation */
+
+nav ul {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+}
+
+nav a {
+    color: #222;
+    text-decoration: none;
+}
+
+nav a:hover {
+    color: #666;
+}

@@ -1,0 +1,19 @@
+.store {
+    padding-top: 2rem;
+}
+
+.store-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+
+  padding: 2rem var(--side-padding);
+  margin: 0;
+
+  list-style: none;
+}
+
+.store-link {
+  text-decoration: none;
+  color: inherit;
+}
