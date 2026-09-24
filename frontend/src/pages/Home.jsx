@@ -3,6 +3,7 @@
 // Components
 import Hero from "../components/Hero.jsx";
 import Store from "../components/Store.jsx";
+import Footer from "../components/Footer.jsx";
 
 //Styles
 import "./styles/Home.css";
@@ -12,6 +13,7 @@ export default function Home({ addToCart }) {
     <div className="page">
       <Hero />
       <Store addToCart={addToCart} />
+      <Footer />
     </div>
   );
 }
