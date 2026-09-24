@@ -1,6 +1,9 @@
 footer {
     width: 100%;
-    padding: 2rem 0;
+    box-sizing: border-box;
+    padding: 2rem 15rem;
     border-top: 1px solid #ddd;
     color: #666;
+    display: flex;
+    justify-content: space-between;
 }
