@@ -13,7 +13,6 @@ export default function Home({ addToCart }) {
     <div className="page">
       <Hero />
       <Store addToCart={addToCart} />
-      <Footer />
     </div>
   );
 }

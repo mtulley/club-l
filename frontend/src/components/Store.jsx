@@ -1,6 +1,5 @@
 // Extneral
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 
 // Components
 import StoreItem from "./StoreItem";
@@ -39,9 +38,7 @@ export default function Store({ addToCart }) {
         <ul className="store-grid">
           {storeItems.map((item) => (
             <li key={item.id}>
-              <Link className="store-link" to={`/store/${item.id}`}>
-                <StoreItem {...item} />
-              </Link>
+              <StoreItem item={item} addToCart={() => addToCart(item)} />
             </li>
           ))}
         </ul>

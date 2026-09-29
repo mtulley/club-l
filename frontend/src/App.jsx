@@ -5,6 +5,7 @@ import { useState } from "react";
 // Components
 import Header from "./components/Header.jsx";
 import CartSidebar from "./components/CartSidebar.jsx";
+import Footer from "./components/Footer.jsx";
 
 // Pages
 import Home from "./pages/Home.jsx";
@@ -19,19 +20,56 @@ function App() {
   const [cartOpen, setCartOpen] = useState(false);
   const [cart, setCart] = useState([]);
 
-  function addToCart(cartItem) {
-    setCart((prevCart) => {
-      const existingItem = prevCart.find((item) => item.id === cartItem.id);
+  function addToCart(item) {
+    setCart((currentCart) => {
+      const existingItem = currentCart.find(
+        (cartItem) => cartItem.id === item.id,
+      );
 
       if (existingItem) {
+        return currentCart.map((cartItem) =>
+          cartItem.id === item.id
+            ? { ...cartItem, quantity: cartItem.quantity + 1 }
+            : cartItem,
+        );
       }
+
+      return [...currentCart, { ...item, quantity: 1 }];
     });
   }
 
+  function incrementCartItem(id) {
+    setCart((currentCart) =>
+      currentCart.map((cartItem) =>
+        cartItem.id === id
+          ? { ...cartItem, quantity: cartItem.quantity + 1 }
+          : cartItem,
+      ),
+    );
+  }
+
+  function decrementCartItem(id) {
+    setCart((currentCart) =>
+      currentCart
+        .map((cartItem) =>
+          cartItem.id === id
+            ? { ...cartItem, quantity: cartItem.quantity - 1 }
+            : cartItem,
+        )
+        .filter((cartItem) => cartItem.quantity > 0),
+    );
+  }
+
+  function deleteCartItem(id) {
+    setCart((currentCart) =>
+      currentCart.filter((cartItem) => cartItem.id !== id),
+    );
+  }
+
   return (
-    <div>
+    <div className="app">
       <Header onCartClick={() => setCartOpen(true)} />
-      <main>
+      <main className="main-content">
         <Routes>
           <Route path="/" element={<Home addToCart={addToCart} />} />
           <Route path="/about" element={<About />} />
@@ -44,7 +82,11 @@ function App() {
         open={cartOpen}
         setCartOpen={setCartOpen}
         onClose={() => setCartOpen(false)}
+        incrementCartItem={incrementCartItem}
+        decrementCartItem={decrementCartItem}
+        deleteCartItem={deleteCartItem}
       />
+      <Footer />
     </div>
   );
 }

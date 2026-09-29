@@ -1,15 +1,21 @@
-// External
+import CartItem from "./CartItem.jsx";
 
-// Components
-
-//Styles
 import "./styles/CartSidebar.css";
 
-export default function CartSidebar({ open, cart, onClose }) {
-  let isEmpty = false;
-  if (cart.length == 0) {
-    isEmpty = true;
-  }
+export default function CartSidebar({
+  open,
+  cart,
+  onClose,
+  deleteCartItem,
+  incrementCartItem,
+  decrementCartItem,
+}) {
+  const isEmpty = cart.length === 0;
+
+  const total = cart.reduce(
+    (sum, item) => sum + Number(item.price) * item.quantity,
+    0,
+  );
 
   return (
     <>
@@ -30,10 +36,29 @@ export default function CartSidebar({ open, cart, onClose }) {
             <p>Add items from the shop and view them here</p>
           </div>
         ) : (
-          <ul>{/* Cart items will go here */}</ul>
+          <ul className="cart-items">
+            {cart.map((cartItem) => (
+              <CartItem
+                key={cartItem.id}
+                cartItem={cartItem}
+                deleteCartItem={deleteCartItem}
+                incrementCartItem={incrementCartItem}
+                decrementCartItem={decrementCartItem}
+              />
+            ))}
+          </ul>
         )}
 
-        <button className="checkout-button">Check Out</button>
+        {!isEmpty && (
+          <div className="cart-total">
+            <strong>Total:</strong>
+            <span>${total.toFixed(2)}</span>
+          </div>
+        )}
+
+        <button className="checkout-button" disabled={isEmpty}>
+          Check Out
+        </button>
       </aside>
     </>
   );
