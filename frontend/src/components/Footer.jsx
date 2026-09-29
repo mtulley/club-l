@@ -11,9 +11,13 @@ export default function Footer() {
       <div className="left-side">
         <p>&copy; 2026</p>
       </div>
-      <div className="right-side">
-        <button>Insta</button>
-        <button>TikTok</button>
+      <div className="social-links">
+        <a>
+          <img src="/insta.png" />
+        </a>
+        <a>
+          <img src="/tiktok.svg" />
+        </a>
       </div>
     </footer>
   );

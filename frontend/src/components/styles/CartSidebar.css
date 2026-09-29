@@ -9,7 +9,7 @@
 
   transition: opacity 0.25s ease;
 
-  z-index: 999;
+  z-index: 100;
 }
 
 .cart-overlay.open {
@@ -33,11 +33,12 @@
 
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 
   transform: translateX(100%);
   transition: transform 0.25s ease;
 
-  z-index: 1000;
+  z-index: 101;
 }
 
 .cart-sidebar.open {
@@ -95,4 +96,25 @@
 
 .checkout-button:hover {
   background-color: #444;
+}
+
+.close-cart-button {
+  border: none;
+  background: transparent !important;
+  color: inherit;
+  font-size: 2rem;
+  line-height: 1;
+  padding: 0;
+  cursor: pointer;
+}
+
+.close-cart-button:hover {
+  background: transparent !important;
+  color: gray;
+}
+
+.empty-cart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

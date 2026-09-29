@@ -27,9 +27,9 @@ export default function Header({ onCartClick }) {
           </nav>
         </div>
         <div className="header-right-side">
-          <button className="cart-button" onClick={onCartClick}>
-            Cart
-          </button>
+          <a onClick={onCartClick} className="cart-button">
+            <img alt="Shopping cart" src="/shopping-cart.svg" />
+          </a>
         </div>
       </div>
     </header>
