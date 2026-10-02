@@ -14,12 +14,14 @@ export default function Header({ onCartClick }) {
           <h3>laurennnnn.zip</h3>
           <nav>
             <ul>
+              {/*
               <li>
                 <NavLink to="/">Home</NavLink>
               </li>
               <li>
                 <NavLink to="/about">About</NavLink>
-              </li>
+              </li> 
+              */}
               <li>
                 <NavLink to="/mail-club">Mail Club</NavLink>
               </li>

@@ -46,18 +46,22 @@
 
   min-height: 400px;
 
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  display: flex;
 
-  background: #f7f7f7;
+  align-items: center;
+  justify-content: center;
 }
 
 .mail-club-container {
+  width: 100%;
   flex: 1;
 
   display: flex;
   align-items: center;
   justify-content: center;
+
+  margin: 0 auto;
+  padding: 4rem 15rem;
 }
 
 .mail-club-content {

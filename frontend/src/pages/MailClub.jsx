@@ -1,6 +1,7 @@
 // External
 
 // Components
+import Hero from "../components/Hero.jsx";
 
 //Styles
 import "./styles/MailClub.css";
@@ -8,7 +9,8 @@ import "./styles/MailClub.css";
 export default function MailClub() {
   return (
     <div className="page">
-      <div className="mail-club-container container">
+      <Hero />
+      <div className="mail-club-container">
         <div className="mail-club-content">
           <div className="mail-club-info">
             <h4>Welcome to the Mail Club!</h4>
@@ -24,7 +26,9 @@ export default function MailClub() {
             <h4>Already a member?</h4>
             <button className="manage-sub-button">Manage Subscription</button>
           </div>
-          <div className="mail-club-example"></div>
+          <div className="mail-club-example">
+            <img src="/mail-club-collage.png" />
+          </div>
         </div>
       </div>
     </div>
