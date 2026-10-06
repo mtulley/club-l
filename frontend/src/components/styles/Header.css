@@ -13,6 +13,12 @@ header .container {
     align-items: center;
     justify-content: space-between;
 }
+ 
+.header-logo img {
+  height: 70px; /* Set your fixed height here */
+  width: 100%;   /* Stretches to fill the available width */
+  object-fit: fill; /* Forces the image to stretch and distort to fill the dimensions */
+}
 
 header .container h1 {
     margin: 0;
@@ -43,7 +49,7 @@ nav a:hover {
 }
 
 .cart-button img {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 3rem;
+  height: 3rem;
   display: block;
 }

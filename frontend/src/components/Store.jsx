@@ -34,7 +34,7 @@ export default function Store({ addToCart }) {
   return (
     <div className="store">
       <div className="container">
-        <h3>Shop</h3>
+        <img className="shop-heading" src="/shop.PNG" />
         <ul className="store-grid">
           {storeItems.map((item) => (
             <li key={item.id}>

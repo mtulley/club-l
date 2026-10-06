@@ -11,7 +11,9 @@ export default function Header({ onCartClick }) {
     <header>
       <div className="container">
         <div className="header-left-side">
-          <h3>laurennnnn.zip</h3>
+          <a className="header-logo">
+            <img src="/club-l.png" />
+          </a>
           <nav>
             <ul>
               {/*
@@ -21,16 +23,16 @@ export default function Header({ onCartClick }) {
               <li>
                 <NavLink to="/about">About</NavLink>
               </li> 
-              */}
               <li>
                 <NavLink to="/mail-club">Mail Club</NavLink>
               </li>
+              */}
             </ul>
           </nav>
         </div>
         <div className="header-right-side">
           <a onClick={onCartClick} className="cart-button">
-            <img alt="Shopping cart" src="/shopping-cart.svg" />
+            <img alt="Shopping cart" src="/shopping-cart.PNG" />
           </a>
         </div>
       </div>

@@ -12,6 +12,7 @@ import Home from "./pages/Home.jsx";
 import About from "./pages/About.jsx";
 import MailClub from "./pages/MailClub.jsx";
 import Product from "./pages/Product.jsx";
+import OnePage from "./pages/OnePage.jsx";
 
 // Styles
 import "./styles/App.css";
@@ -71,7 +72,8 @@ function App() {
       <Header onCartClick={() => setCartOpen(true)} />
       <main className="main-content">
         <Routes>
-          <Route path="/" element={<Home addToCart={addToCart} />} />
+          <Route path="/" element={<OnePage />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/mail-club" element={<MailClub />} />
           <Route path="/store/:id" element={<Product />} />

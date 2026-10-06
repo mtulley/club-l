@@ -17,3 +17,8 @@
   text-decoration: none;
   color: inherit;
 }
+
+.shop-heading {
+  height: 4rem;
+  width: auto;
+}
