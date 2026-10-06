@@ -2,14 +2,14 @@
 
 // Components
 import Hero from "../components/Hero.jsx";
-import Store from "../components/Store.jsx";
 
 //Styles
-import "./styles/Home.css";
+import "./styles/OnePage.css";
 
-export default function Home({ addToCart }) {
+export default function OnePage() {
   return (
     <div className="page">
+      <Hero />
       <div className="mail-club-container">
         <div className="mail-club-content">
           <div className="mail-club-info">
@@ -22,9 +22,13 @@ export default function Home({ addToCart }) {
               If you like what you see in the example on the right and in the
               shop, consider signing up for the next month's mail club!
             </p>
-            <button className="signup-button">Sign up</button>
+            <button className="signup-button">
+              <img src="/subscribe.PNG" />
+            </button>
             <h4>Already a member?</h4>
-            <button className="manage-sub-button">Manage Subscription</button>
+            <button className="manage-subscription-button">
+              <img src="/manage-subscription.PNG" />
+            </button>
           </div>
           <div className="mail-club-example">
             <img src="/mail-club-collage.png" />

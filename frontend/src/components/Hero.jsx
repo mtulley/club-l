@@ -13,9 +13,7 @@ export default function Hero() {
     <div className="hero">
       <img src={heroImage} />
       <div className="hero-content container">
-        <h1>Club L</h1>
-        <p>Monthly original artwork prints</p>
-        <Link to="/mail-club">Visit Mail Club</Link>
+        <h3>Monthly original artwork prints</h3>
       </div>
     </div>
   );
