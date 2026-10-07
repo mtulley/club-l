@@ -1,12 +1,11 @@
 // External
-import { NavLink } from "react-router";
 
 // Components
 
 //Styles
 import "./styles/Header.css";
 
-export default function Header({ onCartClick }) {
+export default function Header() {
   return (
     <header>
       <div className="container">
@@ -14,21 +13,6 @@ export default function Header({ onCartClick }) {
           <a className="header-logo">
             <img src="/club-l.png" />
           </a>
-          <nav>
-            <ul>
-              {/*
-              <li>
-                <NavLink to="/">Home</NavLink>
-              </li>
-              <li>
-                <NavLink to="/about">About</NavLink>
-              </li> 
-              <li>
-                <NavLink to="/mail-club">Mail Club</NavLink>
-              </li>
-              */}
-            </ul>
-          </nav>
         </div>
       </div>
     </header>

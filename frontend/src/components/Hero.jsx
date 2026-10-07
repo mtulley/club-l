@@ -1,12 +1,10 @@
 // External
-import { Link } from "react-router-dom";
-
 // Components
 
 // Styles
 import "./styles/Hero.css";
 
-import heroImage from "../assets/hero.png";
+import heroImage from "/hero.png";
 
 export default function Hero() {
   return (

@@ -23,33 +23,3 @@ header .container {
 header .container h1 {
     margin: 0;
 }
-
-/* Navigation */
-
-nav ul {
-    display: flex;
-    gap: 1.5rem;
-    list-style: none;
-}
-
-nav a {
-    color: #222;
-    text-decoration: none;
-}
-
-nav a:hover {
-    color: #666;
-}
-
-.cart-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.cart-button img {
-  width: 3rem;
-  height: 3rem;
-  display: block;
-}
