@@ -11,10 +11,10 @@ export default function Footer() {
       <div className="left-side"></div>
       <div className="social-links">
         <a>
-          <img src="/insta.PNG" />
+          <img src="/insta.png" />
         </a>
         <a>
-          <img src="/tiktok.PNG" />
+          <img src="/tiktok.png" />
         </a>
       </div>
     </footer>
