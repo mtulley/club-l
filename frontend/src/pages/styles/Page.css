@@ -39,15 +39,16 @@
   margin: 0 auto;
   padding-top: 4rem;
   padding-bottom: 4rem;
+  padding-left: 15rem;
+  padding-right: 15rem;
 }
 
 .mail-club-content {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
 
   width: 100%;
-  max-width: 1000px;
   gap: 5rem;
 }
 
