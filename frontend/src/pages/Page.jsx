@@ -20,11 +20,11 @@ export default function Page() {
               <br />
             </p>
             <button className="signup-button">
-              <img src="/subscribe.PNG" />
+              <img src="/subscribe.png" />
             </button>
             <h4>Already a member?</h4>
             <button className="manage-subscription-button">
-              <img src="/manage-subscription.PNG" />
+              <img src="/manage-subscription.png" />
             </button>
           </div>
           <div className="mail-club-example">
