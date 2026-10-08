@@ -4,7 +4,7 @@
 import Hero from "../components/Hero.jsx";
 
 //Styles
-import "./styles/OnePage.css";
+import "./styles/Page.css";
 
 export default function Page() {
   return (
