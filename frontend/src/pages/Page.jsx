@@ -19,12 +19,10 @@ export default function Page() {
               prints, stickers, and more.
               <br />
             </p>
-            <button className="signup-button">
-              <img src="/subscribe.png" />
-            </button>
+            <button className="signup-button">Subscribe</button>
             <h4>Already a member?</h4>
             <button className="manage-subscription-button">
-              <img src="/manage-subscription.png" />
+              Manage Subscription
             </button>
           </div>
           <div className="mail-club-example">

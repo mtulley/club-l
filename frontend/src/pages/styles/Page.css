@@ -1,34 +1,3 @@
-.signup-button {
-    background-color: white;
-    border-color: rgb(38, 59, 135);
-    border-width: 2px;
-    border-style: solid;
-    padding: 0.5rem 0.75rem;
-}
-
-.signup-button img {
-    height: 1.5rem;
-    width: auto;
-}
-
-.manage-subscription-button {
-    background-color: white;
-    border-color: rgb(38, 59, 135);
-    border-width: 2px;
-    border-style: solid;
-    padding: 0.5rem 0.75rem;
-}
-
-.manage-subscription-button img {
-    height: 4rem;
-    width: auto;
-}
-
-.manage-subscription-button:hover,
-.signup-button:hover {
-    background: #ffffff;
-}
-
 .mail-club-content {
     display: flex;
     flex-direction: row;
@@ -42,6 +11,10 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+
+  h4 {
+    padding-top: 3rem;
+  }
 }
 
 .mail-club-example {
