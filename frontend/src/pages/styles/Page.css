@@ -52,14 +52,32 @@
   gap: 5rem;
 }
 
+.mail-club-info button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.stripe-error {
+  color: #9c2424;
+  margin-top: 1rem;
+}
+
+@media (max-width: 900px) {
+  .mail-club-container {
+    padding: 2rem 1.5rem;
+  }
+
+  .mail-club-content {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .mail-club-example {
+    min-height: 0;
+  }
+}
+
 .mail-club-example,
 .mail-club-info {
   flex: 1;
 }
-
-
-
-
-
-
-
