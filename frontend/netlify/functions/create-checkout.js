@@ -9,12 +9,24 @@ export async function handler(event) {
   }
 
   const secretKey = process.env.STRIPE_SECRET_KEY;
-  const priceId = process.env.STRIPE_PRICE_ID;
+  let body;
+  try {
+    body = event.body ? JSON.parse(event.body) : {};
+  } catch {
+    return json(400, { error: "Invalid request." });
+  }
+  const priceIds = {
+    monthly: process.env.STRIPE_PRICE_ID_MONTHLY,
+    quarterly: process.env.STRIPE_PRICE_ID_QUARTERLY,
+    yearly: process.env.STRIPE_PRICE_ID_YEARLY,
+  };
+  const priceId = priceIds[body.plan];
   const siteUrl = process.env.URL || process.env.DEPLOY_PRIME_URL || process.env.SITE_URL;
-  if (!secretKey || !priceId || !siteUrl) {
+  if (!secretKey || !siteUrl) {
     console.error("Stripe checkout configuration is incomplete.");
     return json(500, { error: "Checkout is not configured yet. Please try again later." });
   }
+  if (!priceId) return json(400, { error: "Choose a valid subscription plan." });
 
   try {
     const stripe = new Stripe(secretKey);

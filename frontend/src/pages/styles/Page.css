@@ -57,6 +57,20 @@
   opacity: 0.7;
 }
 
+.plan-label {
+  margin: 0.5rem 0;
+}
+
+.mail-club-info select {
+  min-width: 14rem;
+  margin-bottom: 1rem;
+  padding: 0.7rem;
+  border: 1px solid #777;
+  background: #fff;
+  color: #222;
+  font: inherit;
+}
+
 .stripe-error {
   color: #9c2424;
   margin-top: 1rem;

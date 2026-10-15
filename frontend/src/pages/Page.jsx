@@ -10,6 +10,7 @@ import "./styles/Page.css";
 export default function Page() {
   const [busy, setBusy] = useState("");
   const [error, setError] = useState("");
+  const [plan, setPlan] = useState("monthly");
 
   async function openStripePage(functionName) {
     setBusy(functionName);
@@ -18,7 +19,7 @@ export default function Page() {
       const response = await fetch(`/.netlify/functions/${functionName}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: "{}",
+        body: JSON.stringify(functionName === "create-checkout" ? { plan } : {}),
       });
       const result = await response.json();
       if (!response.ok || !result.url) {
@@ -38,11 +39,13 @@ export default function Page() {
         <div className="mail-club-content">
           <div className="mail-club-info">
             <h4>Welcome to my mail club!</h4>
-            <p>
-              Sign up to recieve monthly artwork packages containing original
-              prints, stickers, and more.
-              <br />
-            </p>
+            <p>Sign up for artwork packages containing original prints, stickers, and more.</p>
+            <label className="plan-label" htmlFor="subscription-plan">Choose a subscription</label>
+            <select id="subscription-plan" value={plan} onChange={(event) => setPlan(event.target.value)} disabled={Boolean(busy)}>
+              <option value="monthly">Monthly</option>
+              <option value="quarterly">Quarterly</option>
+              <option value="yearly">Yearly</option>
+            </select>
             <button className="signup-button" onClick={() => openStripePage("create-checkout")} disabled={Boolean(busy)}>
               {busy === "create-checkout" ? "Opening checkout…" : "Subscribe"}
             </button>
