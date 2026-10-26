@@ -1,46 +1,102 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   EmbeddedCheckout,
   EmbeddedCheckoutProvider,
-} from "@stripe/react-stripe-js/checkout";
+} from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import "./styles/MailClubCheckout.css";
 
-// VITE_STRIPE_PUBLISHABLE_KEY is public by design. Never put a secret key here.
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+const publishableKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
+const stripePromise = publishableKey ? loadStripe(publishableKey) : null;
 
-export default function MailClubCheckout() {
-  const [error, setError] = useState("");
+export default function MailClubCheckout({ onClose }) {
+  const [error, setError] = useState(
+    publishableKey ? "" : "Checkout is not configured yet.",
+  );
 
   const fetchClientSecret = useCallback(async () => {
     setError("");
-    const response = await fetch(
-      "/.netlify/functions/create-checkout-session",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({}),
-      },
-    );
 
-    const data = await response.json();
-    if (!response.ok || !data.clientSecret) {
+    try {
+      const response = await fetch(
+        "/.netlify/functions/create-checkout-session",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({}),
+        },
+      );
+
+      let data;
+      try {
+        data = await response.json();
+      } catch {
+        throw new Error("Could not start checkout. Please try again.");
+      }
+
+      if (!response.ok || !data.clientSecret) {
+        throw new Error(
+          data.error || "Could not start checkout. Please try again.",
+        );
+      }
+
+      return data.clientSecret;
+    } catch (checkoutError) {
       const message =
-        data.error || "Could not start checkout. Please try again.";
+        checkoutError instanceof Error
+          ? checkoutError.message
+          : "Could not start checkout. Please try again.";
       setError(message);
-      throw new Error(message);
+      throw checkoutError;
     }
-    return data.clientSecret;
   }, []);
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
+
   return (
-    <section>
-      {error && <p role="alert">{error}</p>}
-      <EmbeddedCheckoutProvider
-        stripe={stripePromise}
-        options={{ fetchClientSecret }}
+    <div
+      className="mail-club-checkout-backdrop"
+      onMouseDown={(event) => {
+        if (event.target === event.currentTarget) {
+          onClose();
+        }
+      }}
+    >
+      <section
+        className="mail-club-checkout-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Mail Club checkout"
       >
-        <EmbeddedCheckout />
-      </EmbeddedCheckoutProvider>
-    </section>
+        <button
+          className="mail-club-checkout-close"
+          onClick={onClose}
+          aria-label="Close checkout"
+          type="button"
+        >
+          &times;
+        </button>
+
+        {error && <p role="alert">{error}</p>}
+
+        {stripePromise && (
+          <EmbeddedCheckoutProvider
+            stripe={stripePromise}
+            options={{ fetchClientSecret }}
+          >
+            <EmbeddedCheckout />
+          </EmbeddedCheckoutProvider>
+        )}
+      </section>
+    </div>
   );
 }

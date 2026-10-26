@@ -1,36 +1,11 @@
-// External
 import { useState } from "react";
 
-// Components
 import Hero from "../components/Hero.jsx";
-
-//Styles
+import MailClubCheckout from "../components/MailClubCheckout.jsx";
 import "./styles/Page.css";
 
 export default function Page() {
-  const [busy, setBusy] = useState("");
-  const [error, setError] = useState("");
-  const [plan, setPlan] = useState("monthly");
-
-  async function openStripePage(functionName) {
-    setBusy(functionName);
-    setError("");
-    try {
-      const response = await fetch(`/.netlify/functions/${functionName}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(functionName === "create-checkout" ? { plan } : {}),
-      });
-      const result = await response.json();
-      if (!response.ok || !result.url) {
-        throw new Error(result.error || "Unable to open Stripe right now.");
-      }
-      window.location.assign(result.url);
-    } catch (err) {
-      setError(err.message || "Unable to open Stripe right now.");
-      setBusy("");
-    }
-  }
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
 
   return (
     <div className="page">
@@ -39,24 +14,26 @@ export default function Page() {
         <div className="mail-club-content">
           <div className="mail-club-info">
             <h4>Welcome to my mail club!</h4>
-            <p>Sign up for artwork packages containing original prints, stickers, and more.</p>
-            <label className="plan-label" htmlFor="subscription-plan">Choose a subscription</label>
-            <select id="subscription-plan" value={plan} onChange={(event) => setPlan(event.target.value)} disabled={Boolean(busy)}>
-              <option value="monthly">Monthly</option>
-              <option value="quarterly">Quarterly</option>
-              <option value="yearly">Yearly</option>
-            </select>
-            <button className="signup-button" onClick={() => openStripePage("create-checkout")} disabled={Boolean(busy)}>
-              {busy === "create-checkout" ? "Opening checkout…" : "Subscribe"}
+            <p>
+              Sign up for artwork packages containing original prints, stickers,
+              and more.
+            </p>
+            <button
+              className="signup-button"
+              type="button"
+              onClick={() => setCheckoutOpen(true)}
+            >
+              Subscribe
             </button>
-            <h4>Already a member?</h4>
-            <button className="manage-subscription-button" onClick={() => openStripePage("create-portal")} disabled={Boolean(busy)}>
-              {busy === "create-portal" ? "Opening portal…" : "Manage Subscription"}
-            </button>
-            {error && <p role="alert" className="stripe-error">{error}</p>}
+            {checkoutOpen && (
+              <MailClubCheckout onClose={() => setCheckoutOpen(false)} />
+            )}
           </div>
           <div className="mail-club-example">
-            <img src="/mail-club-collage.png" />
+            <img
+              src="/mail-club-collage.png"
+              alt="Examples of Mail Club artwork"
+            />
           </div>
         </div>
       </div>
