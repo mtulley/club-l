@@ -27,7 +27,7 @@ export default async (req) => {
 
     // Price ID is controlled by the server, never accepted from the browser.
     const session = await stripe.checkout.sessions.create({
-      ui_mode: "embedded",
+      ui_mode: "embedded_page",
       mode: "subscription",
       line_items: [{ price: priceId, quantity: 1 }],
       return_url: `${siteUrl}/mail-club?session_id={CHECKOUT_SESSION_ID}`,
