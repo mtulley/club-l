@@ -31,7 +31,7 @@ export default async (req) => {
       line_items: [{ price: priceId, quantity: 1 }],
       return_url: `${siteUrl}/mail-club?session_id={CHECKOUT_SESSION_ID}`,
       shipping_address_collection: {
-        allowed_countries: ["US", "CA"],
+        allowed_countries: ["US", "CA", "GB"],
       },
     });
 
