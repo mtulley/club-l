@@ -25,14 +25,14 @@ export default async (req) => {
   try {
     const stripe = new Stripe(secretKey);
 
-    // Price ID is controlled by the server, never accepted from the browser.
     const session = await stripe.checkout.sessions.create({
       ui_mode: "embedded_page",
       mode: "subscription",
       line_items: [{ price: priceId, quantity: 1 }],
       return_url: `${siteUrl}/mail-club?session_id={CHECKOUT_SESSION_ID}`,
-      // Add any required customer collection settings here after confirming
-      // the Mail Club's shipping/address requirements in Stripe's current docs.
+      shipping_address_collection: {
+        allowed_countries: ["US", "CA", "GB"],
+      },
     });
 
     if (!session.client_secret) {
