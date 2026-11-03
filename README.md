@@ -1,4 +1,4 @@
-# Club/L Art Store
+# Club/L Mail Club
 
 ## Visit live site at [club-l.netlify.app](https://club-l.netlify.app)
 
