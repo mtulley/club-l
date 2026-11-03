@@ -1,5 +1,7 @@
 # Lauren Art storefront
 
+## Visit live site at club-l.netlify.app
+
 ## Netlify deployment
 
 Connect this repository to Netlify and set the **Base directory** to `frontend` (or use the checked-in `frontend/netlify.toml` settings). Netlify builds the Vite site from `frontend`, publishes `dist`, and deploys the functions from `frontend/netlify/functions`.
