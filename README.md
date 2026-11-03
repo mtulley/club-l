@@ -1,6 +1,6 @@
 # Lauren Art storefront
 
-## Visit live site at club-l.netlify.app
+## Visit live site at [](https://club-l.netlify.app)
 
 ## Netlify deployment
 
