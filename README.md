@@ -1,4 +1,4 @@
-# Lauren Art storefront
+# Club/L Art Store
 
 ## Visit live site at [club-l.netlify.app](https://club-l.netlify.app)
 
