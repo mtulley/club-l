@@ -11,7 +11,7 @@ export default function Hero() {
     <div className="hero">
       <img src={heroImage} />
       <div className="hero-content container">
-        <h3>Monthly original artwork prints</h3>
+        <h3>Welcome to Club/L!</h3>
       </div>
     </div>
   );
