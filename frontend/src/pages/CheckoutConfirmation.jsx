@@ -8,13 +8,15 @@ const MAX_POLLS = 5;
 export default function CheckoutConfirmation() {
   const [searchParams] = useSearchParams();
   const sessionId = searchParams.get("session_id");
-  const [state, setState] = useState({ status: "loading" });
+  const [state, setState] = useState({ sessionId: null, status: "loading" });
+  const visibleState = !sessionId
+    ? { status: "invalid" }
+    : state.sessionId === sessionId
+      ? state
+      : { status: "loading" };
 
   useEffect(() => {
-    if (!sessionId) {
-      setState({ status: "invalid" });
-      return undefined;
-    }
+    if (!sessionId) return undefined;
 
     let cancelled = false;
     let timeoutId;
@@ -37,18 +39,18 @@ export default function CheckoutConfirmation() {
         }
 
         if (response.ok && data.status === "complete") {
-          setState({ status: "complete", ...data });
+          setState({ sessionId, status: "complete", ...data });
           return;
         }
 
         if (response.status === 202) {
-          setState({ status: "processing" });
+          setState({ sessionId, status: "processing" });
           return;
         }
 
-        setState({ status: "error", message: data.error });
+        setState({ sessionId, status: "error", message: data.error });
       } catch {
-        if (!cancelled) setState({ status: "error" });
+        if (!cancelled) setState({ sessionId, status: "error" });
       }
     };
 
@@ -60,21 +62,21 @@ export default function CheckoutConfirmation() {
     };
   }, [sessionId]);
 
-  const isSuccess = state.status === "complete";
+  const isSuccess = visibleState.status === "complete";
   const heading = {
     loading: "Confirming your subscription…",
     complete: "You’re in!",
     processing: "Your payment is processing",
     invalid: "No checkout session found",
     error: "We couldn’t confirm your checkout",
-  }[state.status];
+  }[visibleState.status];
 
   return (
     <section className="checkout-confirmation page" aria-live="polite">
       <div className="checkout-confirmation-card">
         {isSuccess ? (
           <div className="checkout-confirmation-icon" aria-hidden="true">✓</div>
-        ) : state.status === "loading" ? (
+        ) : visibleState.status === "loading" ? (
           <div className="checkout-confirmation-spinner" aria-hidden="true" />
         ) : null}
         <p className="checkout-confirmation-eyebrow">CLUB/L MAIL CLUB</p>
@@ -85,32 +87,32 @@ export default function CheckoutConfirmation() {
             <p>
               Thanks for joining! Your subscription is confirmed.
             </p>
-            {state.customerEmail && (
-              <p>Checkout email: {state.customerEmail}</p>
+            {visibleState.customerEmail && (
+              <p>Checkout email: {visibleState.customerEmail}</p>
             )}
-            {state.plan && <p className="checkout-confirmation-plan">{state.plan}</p>}
+            {visibleState.plan && <p className="checkout-confirmation-plan">{visibleState.plan}</p>}
             <p>We can’t wait to send you something lovely in the mail.</p>
           </>
         )}
 
-        {state.status === "loading" && (
+        {visibleState.status === "loading" && (
           <p>We’re checking your payment with Stripe. This usually takes a moment.</p>
         )}
 
-        {state.status === "processing" && (
+        {visibleState.status === "processing" && (
           <p>
             Stripe is still processing your payment. If you completed checkout,
             check back here in a moment or look for an update from Stripe.
           </p>
         )}
 
-        {state.status === "invalid" && (
+        {visibleState.status === "invalid" && (
           <p>Open this page from the checkout confirmation link to view your order.</p>
         )}
 
-        {state.status === "error" && (
+        {visibleState.status === "error" && (
           <p>
-            {state.message ||
+            {visibleState.message ||
               "Please check your email for a Stripe receipt, or contact us if you need help."}
           </p>
         )}
