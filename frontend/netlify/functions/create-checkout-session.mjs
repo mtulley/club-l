@@ -13,11 +13,11 @@ export default async (req) => {
 
   const secretKey = process.env.STRIPE_SECRET_KEY;
   const priceId = process.env.STRIPE_PRICE_ID;
-  const siteUrl = process.env.URL;
+  const siteUrl = process.env.URL || process.env.SITE_URL;
 
   if (!secretKey || !priceId || !siteUrl) {
     console.error(
-      "Missing STRIPE_SECRET_KEY, STRIPE_PRICE_ID, or Netlify URL.",
+      "Missing STRIPE_SECRET_KEY, STRIPE_PRICE_ID, or site URL.",
     );
     return json({ error: "Checkout is not configured yet." }, 500);
   }
@@ -29,7 +29,7 @@ export default async (req) => {
       ui_mode: "embedded_page",
       mode: "subscription",
       line_items: [{ price: priceId, quantity: 1 }],
-      return_url: `${siteUrl}/mail-club?session_id={CHECKOUT_SESSION_ID}`,
+      return_url: `${siteUrl.replace(/\/$/, "")}/checkout/confirmation?session_id={CHECKOUT_SESSION_ID}`,
       shipping_address_collection: {
         allowed_countries: ["US", "CA", "GB"],
       },
