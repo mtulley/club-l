@@ -1,4 +1,5 @@
 // External
+import { Link } from "react-router-dom";
 
 // Components
 
@@ -10,9 +11,9 @@ export default function Header() {
     <header>
       <div className="container">
         <div className="header-left-side">
-          <a className="header-logo">
+          <Link to="/" className="header-logo">
             <img src="/club-l.png" />
-          </a>
+          </Link>
         </div>
       </div>
     </header>

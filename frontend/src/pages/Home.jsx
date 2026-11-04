@@ -2,9 +2,9 @@ import { useState } from "react";
 
 import Hero from "../components/Hero.jsx";
 import MailClubCheckout from "../components/MailClubCheckout.jsx";
-import "./styles/Page.css";
+import "./styles/Home.css";
 
-export default function Page() {
+export default function Home() {
   const [checkoutOpen, setCheckoutOpen] = useState(false);
 
   return (

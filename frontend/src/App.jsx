@@ -1,11 +1,14 @@
 // External
+import { Route, Routes } from "react-router-dom";
 
 // Components
 import Header from "./components/Header.jsx";
 import Footer from "./components/Footer.jsx";
 
 // Pages
-import Page from "./pages/Page.jsx";
+import Home from "./pages/Home.jsx";
+import TermsOfService from "./pages/TermsOfService.jsx";
+import PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
 
 // Styles
 import "./styles/App.css";
@@ -15,7 +18,11 @@ function App() {
     <div className="app">
       <Header />
       <main className="main-content">
-        <Page />
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
+          <Route path="privacy-policy" element={<PrivacyPolicy />} />
+        </Routes>
       </main>
       <Footer />
     </div>
