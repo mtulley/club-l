@@ -322,7 +322,8 @@ export default function PrivacyPolicy() {
           <li>Appealing a privacy-rights decision where required by law.</li>
         </ul>
         <p>
-          To submit a privacy request, contact us at [Privacy Contact Email].
+          To submit a privacy request, contact us at{" "}
+          <a href="mailto:clubl.updates@gmail.com">clubl.updates@gmail.com</a>.
         </p>
         <p>
           We may need to verify your identity before completing certain
@@ -380,8 +381,8 @@ export default function PrivacyPolicy() {
           honor legally recognized preference signals.
         </p>
         <p>
-          To exercise your California privacy rights, contact [Privacy Contact
-          Email].
+          To exercise your California privacy rights, contact us at{" "}
+          <a href="mailto:clubl.updates@gmail.com">clubl.updates@gmail.com</a>.
         </p>
         <p>
           We may update this section as necessary to reflect our actual data
