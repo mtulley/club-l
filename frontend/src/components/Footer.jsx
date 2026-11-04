@@ -18,7 +18,10 @@ export default function Footer() {
         </Link>
       </div>
       <div className="social-links">
-        <a>
+        <a
+          href="https://www.instagram.com/clublprints?vrfl=ZHpmYXMwNXZkbDE4"
+          target="_blank"
+        >
           <img src="/insta.png" />
         </a>
         <a>

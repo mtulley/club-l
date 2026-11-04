@@ -15,8 +15,9 @@ export default function Home() {
           <div className="mail-club-info">
             <h4>Welcome to my mail club!</h4>
             <p>
-              Sign up for artwork packages containing original prints, stickers,
-              and more.
+              When you subscribe to Club/L you will receive a monthly package
+              which includes a 5x7 print, a letter, & sticker(s). All items are
+              original and made by me each month.
             </p>
             <button
               className="signup-button"
