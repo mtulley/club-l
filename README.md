@@ -10,7 +10,7 @@ Use Node.js 22 or newer. The Stripe functions require no separate server: Netlif
 
 ## Stripe setup
 
-Create recurring Prices in Stripe for the monthly, quarterly, and yearly mail club options. In Stripe, enable the customer portal and copy its customer portal login link (the hosted link that asks customers to enter their email and verifies it).
+Create recurring Prices in Stripe for the monthly, quarterly, and yearly mail club options. In Stripe, enable the customer portal, allow customers to cancel subscriptions in the portal configuration, and copy its customer portal login link (the hosted link that asks customers to enter their email and verifies it). Customers can start a new subscription from the Subscribe button after canceling.
 
 Set these environment variables in **Netlify Site configuration → Environment variables**, for production and any deploy contexts where you want payments enabled:
 
@@ -24,7 +24,7 @@ Set these environment variables in **Netlify Site configuration → Environment 
 | `VITE_STRIPE_PUBLISHABLE_KEY` | Yes | Publishable key for the same Stripe account/mode, used by embedded Checkout in the browser. |
 | `SITE_URL` | Only for local development | Canonical absolute site URL, such as `http://localhost:8888` with Netlify CLI. Netlify supplies `URL` automatically on deployed sites; `SITE_URL` is the fallback. |
 
-All three Price IDs, the secret key, and the publishable key must belong to the same Stripe account and mode (test or live). Do not set `URL` yourself on Netlify; it is a Netlify-provided deploy URL. The checkout function creates an embedded subscription Checkout Session and returns customers to `/checkout/confirmation`. That page verifies the completed session with Stripe on the server before showing a confirmation. The manage button opens Stripe's hosted portal login, which verifies the subscriber's email before granting access.
+All three Price IDs, the secret key, and the publishable key must belong to the same Stripe account and mode (test or live). Do not set `URL` yourself on Netlify; it is a Netlify-provided deploy URL. The checkout function creates an embedded subscription Checkout Session and returns customers to `/checkout/confirmation`. That page verifies the completed session with Stripe on the server before showing a confirmation. The Manage subscription button opens Stripe's hosted customer portal login, which verifies the subscriber's email before allowing them to manage or cancel their subscription. The storefront does not have customer sign-in, so it cannot securely identify a customer for an embedded billing portal session.
 
 For local function development, install Netlify CLI and run `netlify dev` from `frontend`, with the variables above in a local `.env` file there. Keep `.env` out of version control. The storefront itself can build without Stripe keys, but the payment buttons return a configuration error until valid keys are supplied.
 

@@ -6,6 +6,32 @@ import "./styles/Home.css";
 
 export default function Home() {
   const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const [portalLoading, setPortalLoading] = useState(false);
+  const [portalError, setPortalError] = useState("");
+
+  const openSubscriptionPortal = async () => {
+    setPortalLoading(true);
+    setPortalError("");
+
+    try {
+      const response = await fetch("/.netlify/functions/customer-portal-link", {
+        cache: "no-store",
+      });
+      const data = await response.json();
+      if (!response.ok || !data.url) {
+        throw new Error(data.error || "The subscription portal is unavailable right now.");
+      }
+
+      window.location.assign(data.url);
+    } catch (error) {
+      setPortalError(
+        error instanceof Error
+          ? error.message
+          : "The subscription portal is unavailable right now.",
+      );
+      setPortalLoading(false);
+    }
+  };
 
   return (
     <div className="page">
@@ -26,6 +52,15 @@ export default function Home() {
             >
               Subscribe
             </button>
+            <button
+              className="manage-subscription-button"
+              type="button"
+              onClick={openSubscriptionPortal}
+              disabled={portalLoading}
+            >
+              {portalLoading ? "Opening subscription portal…" : "Manage subscription"}
+            </button>
+            {portalError && <p className="stripe-error" role="alert">{portalError}</p>}
             {checkoutOpen && (
               <MailClubCheckout onClose={() => setCheckoutOpen(false)} />
             )}
