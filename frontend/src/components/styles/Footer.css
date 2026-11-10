@@ -90,15 +90,21 @@ footer {
 @media (max-width: 480px) {
   footer {
     flex-direction: column-reverse;
+    align-items: stretch;
     gap: 20px;
     padding: 24px 16px;
   }
 
   .left-side {
+    justify-content: center;
     gap: 20px;
   }
 
   .left-side a {
     font-size: 12px;
+  }
+
+  .social-links {
+    justify-content: center;
   }
 }
