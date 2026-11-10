@@ -26,3 +26,13 @@
     background: rgba(0, 0, 0, 0);
     pointer-events: none;
 }
+
+@media (max-width: 600px) {
+    .hero {
+        height: 360px;
+    }
+
+    .hero-content h3 {
+        font-size: 1.5rem;
+    }
+}
