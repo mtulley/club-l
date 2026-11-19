@@ -1,9 +1,12 @@
+// External
 import { useCallback, useEffect, useState } from "react";
 import {
   EmbeddedCheckout,
   EmbeddedCheckoutProvider,
 } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+
+// Styles
 import "./styles/MailClubCheckout.css";
 
 const publishableKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;

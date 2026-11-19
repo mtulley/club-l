@@ -1,34 +1,46 @@
 # Club/L Mail Club
 
+This is an art store ecommerce site that sells artwork prints.
+
 ## Visit live site at [club-l.netlify.app](https://club-l.netlify.app)
 
-## Netlify deployment
+## Store checkout backend
 
-Connect this repository to Netlify and set the **Base directory** to `frontend` (or use the checked-in `frontend/netlify.toml` settings). Netlify builds the Vite site from `frontend`, publishes `dist`, and deploys the functions from `frontend/netlify/functions`.
+The Express API creates Stripe-hosted checkout sessions from active product
+records in PostgreSQL. It ignores client prices, accepts US shipping only,
+offers free shipping, and uses Stripe Tax for tax calculation. Paid orders are
+saved from signed Stripe webhooks; apply the migration before enabling checkout:
 
-Use Node.js 22 or newer. The Stripe functions require no separate server: Netlify runs them as serverless functions.
+```powershell
+Set-Location backend
+Copy-Item .env.example .env
+# Fill in the local database settings in .env, then run:
+npm run migrate
+```
 
-## Stripe setup
+Configure the backend from `backend/.env.example` (use a private production
+secret manager for real credentials). Production requires HTTPS for
+`FRONTEND_URL`, a live Stripe secret key, the Stripe webhook signing secret,
+database credentials, and `DB_SSL=true`. Set `CORS_ORIGINS` to the exact
+frontend origins. Configure `TRUST_PROXY_HOPS` only to match the trusted
+reverse proxies in front of the API.
 
-Create one recurring monthly Price in Stripe. The checkout function reads its Price ID from `STRIPE_PRICE_ID`. In Stripe, enable the customer portal, allow customers to cancel subscriptions in the portal configuration, and copy its customer portal login link (the hosted link that asks customers to enter their email and verifies it). Customers can start a new subscription from the Subscribe button after canceling.
+The checkout rate limiter uses an in-memory store and is intended for a
+single backend instance. Configure a shared rate-limit store before running
+multiple API instances.
 
-Set these environment variables in **Netlify Site configuration → Environment variables**, for production and any deploy contexts where you want payments enabled:
+The subscription portal route accepts only a completed subscription Checkout
+Session ID. The confirmation page keeps that ID in the current browser session;
+customers who subscribed elsewhere must reopen their successful confirmation
+link in that browser. Enable the Stripe Customer Portal in the Stripe dashboard.
 
-| Variable | Required | Value |
-| --- | --- | --- |
-| `STRIPE_SECRET_KEY` | Yes | Secret key for the Stripe account/mode you are deploying (`sk_live_…` in production, `sk_test_…` for test deploys). Never expose this as a `VITE_` variable. |
-| `STRIPE_PRICE_ID` | Yes | The recurring monthly subscription Price ID (`price_…`). |
-| `STRIPE_WEBHOOK_SECRET` | Yes, if using the webhook | Signing secret for the Stripe webhook endpoint configured below (`whsec_…`). |
-| `STRIPE_CUSTOMER_PORTAL_LOGIN_URL` | Yes | Stripe hosted customer portal login link, usually beginning `https://billing.stripe.com/p/login/…`. Configure the portal in the same account/mode. |
-| `VITE_STRIPE_PUBLISHABLE_KEY` | Yes | Publishable key for the same Stripe account/mode, used by embedded Checkout in the browser. |
-| `SITE_URL` | Only for local development | Canonical absolute site URL, such as `http://localhost:8888` with Netlify CLI. Netlify supplies `URL` automatically on deployed sites; `SITE_URL` is the fallback. |
-
-The Price ID, secret key, publishable key, and webhook signing secret must belong to the same Stripe account and mode (test or live). Do not set `URL` yourself on Netlify; it is a Netlify-provided deploy URL. The checkout function creates an embedded monthly subscription Checkout Session and returns customers to `/checkout/confirmation`. That page verifies the completed session with Stripe on the server before showing a confirmation. The Manage subscription button opens Stripe's hosted customer portal login, which verifies the subscriber's email before allowing them to manage or cancel their subscription. The storefront does not have customer sign-in, so it cannot securely identify a customer for an embedded billing portal session.
-
-In Stripe Workbench, add a webhook endpoint for `https://<your-site-domain>/.netlify/functions/stripe-webhook` and subscribe to `checkout.session.completed`, `customer.subscription.created`, `customer.subscription.updated`, `customer.subscription.deleted`, `invoice.paid`, and `invoice.payment_failed`. Store that endpoint's signing secret as `STRIPE_WEBHOOK_SECRET` in Netlify. The webhook verifies and logs these events; it does not store orders or trigger shipping. Orders and renewals are fulfilled manually by reviewing payments and subscriptions in the Stripe Dashboard, so check it regularly and track which shipments have been sent.
-
-For local function development, install Netlify CLI and run `netlify dev` from `frontend`, with the variables above in a local `.env` file there. Keep `.env` out of version control. The storefront itself can build without Stripe keys, but the payment buttons return a configuration error until valid keys are supplied.
-
-## Verify a deploy
-
-Run `npm run lint` and `npm run build` from `frontend`. In the Stripe test mode first, complete a checkout, then use the manage link to confirm the customer can reach the portal. Before launch, use the matching live mode key, Price, and portal login link.
+Enable Stripe Tax in the Stripe account and configure the account's default
+product tax category or assign an appropriate tax category to products. In the
+Stripe dashboard, register `POST /api/stripe/webhook` for
+`checkout.session.completed` and set its signing secret as
+`STRIPE_WEBHOOK_SECRET`. Set the frontend's `VITE_BACKEND_URL` to the deployed
+API origin. Do not expose the Stripe secret or webhook secret to the frontend.
+The order tables retain customer email and shipping address for fulfillment;
+restrict database access and apply an appropriate retention policy. The
+current product schema has no stock field, so checkout does not reserve
+inventory for limited-run products.

@@ -1,0 +1,224 @@
+.cart-sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  justify-content: flex-end;
+  background: rgba(20, 42, 48, 0.56);
+  backdrop-filter: blur(4px);
+  animation: cart-backdrop-in 180ms ease-out;
+}
+
+.cart-sidebar {
+  display: flex;
+  flex-direction: column;
+  width: min(100%, 440px);
+  height: 100%;
+  padding: 1.5rem;
+  overflow-y: auto;
+  background: var(--paper-light);
+  box-shadow: -16px 0 48px rgba(8, 28, 33, 0.22);
+  animation: cart-panel-in 220ms ease-out;
+}
+
+.cart-sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.cart-sidebar-header h2 {
+  margin: 0;
+  color: var(--sea);
+  font-size: 1.5rem;
+}
+
+.cart-sidebar-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ink);
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.cart-sidebar-close:hover {
+  background: #efe5d8;
+  color: var(--coral-dark);
+}
+
+.cart-sidebar-empty {
+  margin: 2rem 0;
+  color: var(--ink-soft);
+  font-size: 1rem;
+  text-align: center;
+}
+
+.cart-sidebar-items {
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cart-sidebar-item {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 1rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.cart-sidebar-item-image {
+  width: 76px;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  background: #e7ddd0;
+}
+
+.cart-sidebar-item-details h3 {
+  margin: 0 0 0.25rem;
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+
+.cart-sidebar-item-price,
+.cart-sidebar-line-total {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.875rem;
+}
+
+.cart-sidebar-line-total {
+  color: var(--ink);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.cart-sidebar-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.cart-sidebar-quantity {
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+
+.cart-sidebar-quantity button {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: transparent;
+  color: var(--ink);
+  font-size: 1rem;
+}
+
+.cart-sidebar-quantity button:hover:not(:disabled) {
+  background: #efe5d8;
+  color: var(--coral-dark);
+}
+
+.cart-sidebar-quantity button:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.cart-sidebar-quantity span {
+  min-width: 28px;
+  text-align: center;
+  font-size: 0.875rem;
+}
+
+.cart-sidebar-remove {
+  padding: 0;
+  background: transparent;
+  color: var(--coral-dark);
+  font-size: 0.8rem;
+  text-decoration: underline;
+}
+
+.cart-sidebar-remove:hover {
+  background: transparent;
+  color: var(--ink);
+}
+
+.cart-sidebar-summary {
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.cart-sidebar-summary > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 1rem;
+}
+
+.cart-sidebar-summary p {
+  margin: 0.5rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+}
+
+.cart-sidebar-summary .cart-sidebar-error {
+  color: #9d332b;
+  font-size: 0.875rem;
+}
+
+.cart-sidebar-checkout {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 1rem;
+}
+
+.cart-sidebar-checkout:disabled {
+  cursor: wait;
+  opacity: 0.7;
+  transform: none;
+}
+
+.cart-sidebar button:focus-visible {
+  outline: 2px solid var(--coral);
+  outline-offset: 3px;
+}
+
+@keyframes cart-backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes cart-panel-in {
+  from { transform: translateX(24px); }
+  to { transform: translateX(0); }
+}
+
+@media (max-width: 600px) {
+  .cart-sidebar {
+    width: 100%;
+    padding: 1.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cart-sidebar-backdrop,
+  .cart-sidebar {
+    animation: none;
+  }
+}

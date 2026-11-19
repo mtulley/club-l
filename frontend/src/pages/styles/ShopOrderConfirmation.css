@@ -1,0 +1,62 @@
+.shop-order-confirmation {
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding: 4rem 1.5rem;
+  background:
+    radial-gradient(ellipse at 50% 0, rgba(169, 199, 201, 0.22), transparent 55%),
+    var(--paper);
+}
+
+.shop-order-confirmation-card {
+  width: min(100%, 38rem);
+  padding: clamp(2rem, 6vw, 4rem);
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  background: var(--paper-light);
+  box-shadow: 0 1.25rem 3.5rem rgba(32, 52, 59, 0.12);
+  text-align: center;
+}
+
+.shop-order-confirmation-eyebrow {
+  margin-bottom: 0.85rem;
+  color: var(--coral-dark);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.shop-order-confirmation-card h1 {
+  margin-bottom: 1rem;
+  color: var(--sea);
+  font-size: clamp(2rem, 7vw, 3rem);
+}
+
+.shop-order-confirmation-card > p:not(.shop-order-confirmation-eyebrow) {
+  margin: 0.75rem 0;
+  color: var(--ink-soft);
+  font-size: 1rem;
+}
+
+.shop-order-confirmation-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  margin-top: 1rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 999px;
+  background: var(--coral);
+  color: var(--paper-light);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.shop-order-confirmation-link:hover {
+  background: var(--coral-dark);
+}
+
+.shop-order-confirmation-link:focus-visible {
+  outline: 2px solid var(--sea);
+  outline-offset: 3px;
+}
