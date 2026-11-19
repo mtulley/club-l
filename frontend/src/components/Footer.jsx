@@ -3,8 +3,12 @@ import { Link } from "react-router-dom";
 
 // Components
 
-//Styles
+// Styles
 import "./styles/Footer.css";
+
+// Images
+import tiktokIcon from "/images/icons/tiktok.png";
+import instagramIcon from "/images/icons/insta.png";
 
 export default function Footer() {
   return (
@@ -22,10 +26,10 @@ export default function Footer() {
           href="https://www.instagram.com/clublprints?vrfl=ZHpmYXMwNXZkbDE4"
           target="_blank"
         >
-          <img src="/insta.png" />
+          <img src={instagramIcon} />
         </a>
         <a>
-          <img src="/tiktok.png" />
+          <img src={tiktokIcon} />
         </a>
       </div>
     </footer>

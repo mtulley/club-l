@@ -7,7 +7,7 @@
 .container {
     width: 100%;
     margin: 0 auto;
-    padding: 0 15rem;
+    padding: 0 clamp(1.5rem, 10vw, 9.375rem);
 }
 
 /* Main */
@@ -30,8 +30,11 @@ section {
 h1,
 h2,
 h3 {
+    color: var(--ink);
+    font-family: Georgia, "Times New Roman", serif;
     line-height: 1.2;
     margin-bottom: 1rem;
+    text-wrap: balance;
 }
 
 h1 {
@@ -48,7 +51,7 @@ h3 {
 
 p {
     margin-bottom: 1rem;
-    font-size: 0.75rem;
+    font-size: 1rem;
 }
 
 
@@ -104,15 +107,29 @@ button,
     display: inline-block;
     padding: 0.7rem 1.2rem;
     border: none;
-    background: #222;
-    color: white;
+    border-radius: 999px;
+    background: var(--coral);
+    color: var(--paper-light);
     text-decoration: none;
     cursor: pointer;
+    font: inherit;
+    font-weight: 700;
+    transition:
+        background-color 180ms ease,
+        color 180ms ease,
+        transform 180ms ease;
 }
 
 button:hover,
 .button:hover {
-    background: #444;
+    background: var(--coral-dark);
+    transform: translateY(-1px);
+}
+
+button:focus-visible,
+.button:focus-visible {
+    outline: 2px solid var(--sea);
+    outline-offset: 3px;
 }
 
 .page {

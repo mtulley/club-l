@@ -4,9 +4,23 @@
     box-sizing: border-box;
 }
 
+:root {
+    color-scheme: light;
+    --ink: #20343b;
+    --ink-soft: #50636a;
+    --paper: #f5f0e7;
+    --paper-light: #fffaf2;
+    --line: #ded4c6;
+    --sea: #1d414a;
+    --coral: #c7654a;
+    --coral-dark: #a84c36;
+}
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: "Avenir Next", Avenir, "Segoe UI", sans-serif;
     line-height: 1.6;
-    color: #222;
-    background: #fff;
+    color: var(--ink);
+    background: var(--paper);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
 }
