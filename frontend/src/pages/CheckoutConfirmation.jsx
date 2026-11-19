@@ -1,14 +1,9 @@
-// External
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-
-// Styles
 import "./styles/CheckoutConfirmation.css";
 
 const POLL_INTERVAL_MS = 2000;
 const MAX_POLLS = 5;
-const SUBSCRIPTION_SESSION_KEY = "clubl-subscription-checkout-session";
-const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 export default function CheckoutConfirmation() {
   const [searchParams] = useSearchParams();
@@ -30,22 +25,10 @@ export default function CheckoutConfirmation() {
 
     const confirmCheckout = async () => {
       try {
-        if (!backendUrl) {
-          throw new Error("Subscription confirmation is not configured.");
-        }
-
         const response = await fetch(
-          new URL(
-            `/api/billing/checkout-sessions/${encodeURIComponent(sessionId)}`,
-            backendUrl,
-          ),
+          `/.netlify/functions/get-checkout-session?session_id=${encodeURIComponent(sessionId)}`,
           { signal: controller.signal, cache: "no-store" },
         );
-        if (!response.headers.get("content-type")?.includes("application/json")) {
-          throw new Error(
-            "The subscription confirmation service is temporarily unavailable.",
-          );
-        }
         const data = await response.json();
         if (cancelled) return;
 
@@ -57,14 +40,6 @@ export default function CheckoutConfirmation() {
 
         if (response.ok && data.status === "complete") {
           setState({ sessionId, status: "complete", ...data });
-          try {
-            window.sessionStorage.setItem(SUBSCRIPTION_SESSION_KEY, sessionId);
-          } catch (storageError) {
-            console.error(
-              "Could not save subscription access for this browser.",
-              storageError,
-            );
-          }
           return;
         }
 
@@ -74,17 +49,8 @@ export default function CheckoutConfirmation() {
         }
 
         setState({ sessionId, status: "error", message: data.error });
-      } catch (error) {
-        if (!cancelled) {
-          setState({
-            sessionId,
-            status: "error",
-            message:
-              error instanceof Error
-                ? error.message
-                : "The subscription confirmation service is temporarily unavailable.",
-          });
-        }
+      } catch {
+        if (!cancelled) setState({ sessionId, status: "error" });
       }
     };
 

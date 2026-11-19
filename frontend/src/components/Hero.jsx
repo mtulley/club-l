@@ -4,7 +4,7 @@
 // Styles
 import "./styles/Hero.css";
 
-import heroImage from "/images/hero.png";
+import heroImage from "/hero.png";
 
 export default function Hero() {
   return (
