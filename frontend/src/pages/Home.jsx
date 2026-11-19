@@ -12,6 +12,9 @@ import "./styles/Home.css";
 // Images
 import mailClubCollage from "/images/mail-club-collage.png";
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
+const SUBSCRIPTION_SESSION_KEY = "clubl-subscription-checkout-session";
+
 export default function Home({ onAddToCart }) {
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [portalLoading, setPortalLoading] = useState(false);
@@ -22,9 +25,34 @@ export default function Home({ onAddToCart }) {
     setPortalError("");
 
     try {
-      const response = await fetch("/.netlify/functions/customer-portal-link", {
-        cache: "no-store",
-      });
+      if (!backendUrl) {
+        throw new Error("Subscription management is not configured.");
+      }
+
+      const checkoutSessionId = window.sessionStorage.getItem(
+        SUBSCRIPTION_SESSION_KEY,
+      );
+      if (!checkoutSessionId) {
+        throw new Error(
+          "To manage your subscription, use the browser where you completed checkout. If you no longer have it, please contact support.",
+        );
+      }
+
+      const response = await fetch(
+        new URL("/api/billing/portal-sessions", backendUrl),
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ checkoutSessionId }),
+          cache: "no-store",
+        },
+      );
+      if (!response.headers.get("content-type")?.includes("application/json")) {
+        throw new Error(
+          "The subscription portal is temporarily unavailable. Please try again later.",
+        );
+      }
+
       const data = await response.json();
       if (!response.ok || !data.url) {
         throw new Error(
@@ -32,7 +60,15 @@ export default function Home({ onAddToCart }) {
         );
       }
 
-      window.location.assign(data.url);
+      const portalUrl = new URL(data.url);
+      if (
+        portalUrl.protocol !== "https:" ||
+        portalUrl.hostname !== "billing.stripe.com"
+      ) {
+        throw new Error("The billing provider returned an invalid URL.");
+      }
+
+      window.location.assign(portalUrl.href);
     } catch (error) {
       setPortalError(
         error instanceof Error

@@ -1,6 +1,9 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { parseCartItems } from "../src/server.js";
+import {
+  parseCartItems,
+  parseSubscriptionCheckoutSessionId,
+} from "../src/server.js";
 
 test("accepts a bounded cart and normalizes product IDs", () => {
   assert.deepEqual(
@@ -66,5 +69,26 @@ test("rejects carts exceeding the line and item limits", () => {
         })),
       }),
     /cannot contain more than 100/,
+  );
+});
+
+test("accepts only a well-formed subscription checkout session ID", () => {
+  assert.equal(
+    parseSubscriptionCheckoutSessionId({
+      checkoutSessionId: "cs_test_a1B2c3",
+    }),
+    "cs_test_a1B2c3",
+  );
+  assert.throws(
+    () => parseSubscriptionCheckoutSessionId({ checkoutSessionId: "cus_123" }),
+    /valid subscription checkout session/,
+  );
+  assert.throws(
+    () =>
+      parseSubscriptionCheckoutSessionId({
+        checkoutSessionId: "cs_live_a1B2c3",
+        customerId: "cus_123",
+      }),
+    /valid subscription checkout session/,
   );
 });

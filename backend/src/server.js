@@ -156,8 +156,30 @@ const sessionReadRateLimit = rateLimit({
   legacyHeaders: false,
 });
 
+const billingPortalRateLimit = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 function invalidRequest(message) {
   return Object.assign(new Error(message), { status: 400 });
+}
+
+export function parseSubscriptionCheckoutSessionId(body) {
+  if (
+    !body ||
+    typeof body !== "object" ||
+    Array.isArray(body) ||
+    Object.keys(body).length !== 1 ||
+    typeof body.checkoutSessionId !== "string" ||
+    !/^cs_(test|live)_[A-Za-z0-9]+$/.test(body.checkoutSessionId)
+  ) {
+    throw invalidRequest("A valid subscription checkout session is required.");
+  }
+
+  return body.checkoutSessionId;
 }
 
 export function parseCartItems(body) {
@@ -420,6 +442,111 @@ app.post(
 );
 
 app.use(express.json({ limit: "16kb", strict: true }));
+
+app.post(
+  "/api/billing/portal-sessions",
+  billingPortalRateLimit,
+  async (req, res, next) => {
+    let checkoutSessionId;
+    try {
+      checkoutSessionId = parseSubscriptionCheckoutSessionId(req.body);
+    } catch (error) {
+      res.status(error.status || 400).json({ error: error.message });
+      return;
+    }
+
+    if (!requireStripe(res)) {
+      return;
+    }
+
+    try {
+      const checkoutSession =
+        await stripe.checkout.sessions.retrieve(checkoutSessionId);
+      const customerId =
+        typeof checkoutSession.customer === "string"
+          ? checkoutSession.customer
+          : checkoutSession.customer?.id;
+
+      if (
+        checkoutSession.mode !== "subscription" ||
+        checkoutSession.status !== "complete" ||
+        !["paid", "no_payment_required"].includes(
+          checkoutSession.payment_status,
+        ) ||
+        !checkoutSession.subscription ||
+        !customerId
+      ) {
+        res.status(403).json({
+          error: "A completed subscription checkout is required.",
+        });
+        return;
+      }
+
+      const portalSession = await stripe.billingPortal.sessions.create({
+        customer: customerId,
+        return_url: frontendOrigin,
+      });
+
+      res.set("Cache-Control", "no-store");
+      res.json({ url: portalSession.url });
+    } catch (error) {
+      if (error.code === "resource_missing") {
+        res.status(404).json({
+          error: "Subscription checkout session was not found.",
+        });
+        return;
+      }
+      next(error);
+    }
+  },
+);
+
+app.get(
+  "/api/billing/checkout-sessions/:sessionId",
+  sessionReadRateLimit,
+  async (req, res, next) => {
+    if (!/^cs_(test|live)_[A-Za-z0-9]+$/.test(req.params.sessionId)) {
+      res.status(400).json({ error: "Invalid checkout session ID." });
+      return;
+    }
+
+    if (!requireStripe(res)) {
+      return;
+    }
+
+    try {
+      const session = await stripe.checkout.sessions.retrieve(
+        req.params.sessionId,
+      );
+      if (session.mode !== "subscription") {
+        res.status(404).json({ error: "Subscription session not found." });
+        return;
+      }
+
+      res.set("Cache-Control", "no-store");
+      if (session.status === "expired") {
+        res.status(410).json({ error: "This checkout session has expired." });
+        return;
+      }
+
+      if (
+        session.status !== "complete" ||
+        !["paid", "no_payment_required"].includes(session.payment_status)
+      ) {
+        res.status(202).json({ status: "processing" });
+        return;
+      }
+
+      res.json({ status: "complete" });
+    } catch (error) {
+      if (error.code === "resource_missing") {
+        res.status(404).json({ error: "Subscription session not found." });
+        return;
+      }
+      next(error);
+    }
+  },
+);
 
 app.get("/api/products", async (req, res, next) => {
   try {
