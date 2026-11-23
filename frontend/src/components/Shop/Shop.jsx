@@ -2,10 +2,10 @@
 import { useState, useEffect } from "react";
 
 // API
-import api from "../api/api.js";
+import api from "../../api/api.js";
 
 // Components
-import ShopItem from "./ShopItem.jsx";
+import ShopItem from "../ShopItem/ShopItem.jsx";
 
 function Shop() {
   const [shopItems, setShopItems] = useState([]);
