@@ -11,7 +11,7 @@ import TermsOfService from "./pages/TermsOfService.jsx";
 import PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
 
 // Styles
-import "./styles/App.css";
+import "./App.css";
 
 function App() {
   return (

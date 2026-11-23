@@ -4,7 +4,7 @@ import MailClub from "../components/MailClub.jsx";
 import Shop from "../components/Shop.jsx";
 
 // Styles
-import "./styles/Home.css";
+import "./Home.css";
 
 export default function Home() {
   return (

@@ -1,5 +1,5 @@
 // Styles
-import "./styles/TermsOfService.css";
+import "./TermsOfService.css";
 
 export default function TermsOfService() {
   return (

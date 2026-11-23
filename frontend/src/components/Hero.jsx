@@ -2,7 +2,7 @@
 // Components
 
 // Styles
-import "./styles/Hero.css";
+import "./Hero.css";
 
 import heroImage from "/hero.png";
 
