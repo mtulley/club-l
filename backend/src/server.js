@@ -2,6 +2,8 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 
+import * as db from "./db.js";
+
 const app = express();
 const BACKEND_PORT = process.env.BACKEND_PORT || 3000;
 
@@ -11,8 +13,8 @@ app.get("/api/products", async (req, res) => {
   const text = "SELECT * FROM Products";
   const params = [];
 
-  const db_response = await db.query(text, params);
-  res.json(db_response.rows);
+  const response = await db.query(text, params);
+  res.json(response.rows);
 });
 
 app.listen(BACKEND_PORT, () => {
