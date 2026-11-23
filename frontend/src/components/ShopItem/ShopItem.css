@@ -1,0 +1,27 @@
+#shop-item {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    min-width: 200px;
+    min-height: 300px;
+}
+
+#shop-item__image {
+    border: 5px double black;
+    width: 100%;
+    min-height: 200px;
+    padding: 2%;
+}
+
+#shop-item__below-image {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 5%;
+    align-items: center;
+}
+
+#shop-item__info {
+    display: flex;
+    flex-direction: column;
+}

@@ -7,6 +7,9 @@ import api from "../../api/api.js";
 // Components
 import ShopItem from "../ShopItem/ShopItem.jsx";
 
+// Styles
+import "./Shop.css";
+
 function Shop() {
   const [shopItems, setShopItems] = useState([]);
   const [loadingShopItems, setLoadingShopItems] = useState(true);
@@ -32,14 +35,14 @@ function Shop() {
   }, []);
 
   return (
-    <section className="container">
-      <h3 id="shop-header">Shop</h3>
+    <section className="container shop">
+      <h3 id="shop__header">Shop</h3>
       {loadingShopItems ? (
-        <h4>{LOADING_MESSAGE}</h4>
+        <h4 id="shop__loading-message">{LOADING_MESSAGE}</h4>
       ) : errorLoadingShopItems ? (
-        <h4>{ERROR_MESSAGE}</h4>
+        <h4 id="shop__error-message">{ERROR_MESSAGE}</h4>
       ) : (
-        <ul>
+        <ul id="shop__item-list">
           {shopItems.map((item) => (
             <li key={item.id}>
               <ShopItem item={item} />

@@ -1,3 +1,6 @@
+// Styles
+import "./MailClub.css";
+
 function MailClub() {
   return (
     <section className="mail-club-container">
