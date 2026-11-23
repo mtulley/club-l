@@ -9,7 +9,6 @@ import Footer from "./components/Footer.jsx";
 import Home from "./pages/Home.jsx";
 import TermsOfService from "./pages/TermsOfService.jsx";
 import PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
-import CheckoutConfirmation from "./pages/CheckoutConfirmation.jsx";
 
 // Styles
 import "./styles/App.css";
@@ -21,7 +20,6 @@ function App() {
       <main className="main-content">
         <Routes>
           <Route index element={<Home />} />
-          <Route path="/checkout/confirmation" element={<CheckoutConfirmation />} />
           <Route path="/terms-of-service" element={<TermsOfService />} />
           <Route path="privacy-policy" element={<PrivacyPolicy />} />
         </Routes>
