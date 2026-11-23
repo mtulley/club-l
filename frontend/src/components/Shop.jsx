@@ -41,7 +41,9 @@ function Shop() {
       ) : (
         <ul>
           {shopItems.map((item) => (
-            <ShopItem item={item} />
+            <li key={item.id}>
+              <ShopItem item={item} />
+            </li>
           ))}
         </ul>
       )}
