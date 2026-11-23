@@ -3,14 +3,21 @@ import express from "express";
 import cors from "cors";
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const BACKEND_PORT = process.env.BACKEND_PORT || 3000;
 
 app.use(cors());
 
 app.get("/api/products", (req, res) => {
-  res.send("Hello, world!");
+  const text = "SELECT * FROM Products";
+  const params = [];
+
+  try {
+    const response = db.query(text, params);
+
+    if ()
+  }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}.`);
+app.listen(BACKEND_PORT, () => {
+  console.log(`Server listening on port ${BACKEND_PORT}.`);
 });
