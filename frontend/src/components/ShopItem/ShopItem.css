@@ -1,15 +1,15 @@
-#shop-item {
+.shop-item {
     display: flex;
     flex-direction: column;
     margin: 1rem;
 }
 
-#shop-item__image {
+.shop-item__image {
     border: 5px double black;
     padding: 2%;
 }
 
-#shop-item__below-image {
+.shop-item__below-image {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -17,13 +17,13 @@
     padding: 5%;
 }
 
-#shop-item__info {
+.shop-item__info {
     display: flex;
     flex-direction: column;
 }
 
-#shop-item__title, 
-#shop-item__price, 
-#shop-item__add-button {
+.shop-item__title, 
+.shop-item__price, 
+.shop-item__add-button {
     text-align: center;
 }

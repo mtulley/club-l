@@ -35,14 +35,14 @@ function Shop() {
   }, []);
 
   return (
-    <section id="shop" className="container">
-      <h3 id="shop__header">Shop</h3>
+    <section className="shop container">
+      <h3 className="shop__header">Shop</h3>
       {loadingShopItems ? (
-        <h4 id="shop__loading-message">{LOADING_MESSAGE}</h4>
+        <h4 className="shop__loading-message">{LOADING_MESSAGE}</h4>
       ) : errorLoadingShopItems ? (
-        <h4 id="shop__error-message">{ERROR_MESSAGE}</h4>
+        <h4 className="shop__error-message">{ERROR_MESSAGE}</h4>
       ) : (
-        <ul id="shop__item-list">
+        <ul className="shop__item-list">
           {shopItems.map((item) => (
             <li key={item.id}>
               <ShopItem item={item} />

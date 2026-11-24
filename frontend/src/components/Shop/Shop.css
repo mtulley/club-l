@@ -1,28 +1,28 @@
-#shop__item-list {
+.shop__item-list {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     list-style: none;
 }
 
 @media (max-width: 1400px) {
-    #shop__item-list {
+    .shop__item-list {
         grid-template-columns: 1fr 1fr;
     }
 }
 
 
 @media (max-width: 900px) {
-    #shop {
+    .shop {
         padding: 0px;
     }
 }
 
 @media (max-width: 600px) {
-    #shop__item-list {
+    .shop__item-list {
         grid-template-columns: 1fr;
     }
 
-    #shop__header {
+    .shop__header {
         text-align: center;
     }
 }
