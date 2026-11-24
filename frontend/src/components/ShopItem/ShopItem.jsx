@@ -7,7 +7,7 @@ function ShopItem({ item }) {
 
   return (
     <div id="shop-item">
-      <img id="shop-item__image" src={img_url} />
+      <img id="shop-item__image" src={img_url} alt="Image unavailable." />
       <div id="shop-item__below-image">
         <div id="shop-item__info">
           <h4 id="shop-item__title">{title}</h4>

@@ -8,11 +8,9 @@ import heroImage from "/hero.png";
 
 export default function Hero() {
   return (
-    <div className="hero">
-      <img src={heroImage} />
-      <div className="hero-content container">
-        <h3>Welcome to Club/L!</h3>
-      </div>
+    <div id="hero">
+      <img id="hero__background-image" src={heroImage} />
+      <h3 id="hero__text">Welcome to Club/L!</h3>
     </div>
   );
 }

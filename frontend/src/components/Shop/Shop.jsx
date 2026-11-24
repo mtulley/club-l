@@ -35,7 +35,7 @@ function Shop() {
   }, []);
 
   return (
-    <section className="container shop">
+    <section id="shop" className="container">
       <h3 id="shop__header">Shop</h3>
       {loadingShopItems ? (
         <h4 id="shop__loading-message">{LOADING_MESSAGE}</h4>
